@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: agents-can-build
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: can-build
+subjects:
+  - kind: ServiceAccount
+    name: jenkins-agents
+    namespace: cloudbees-ci
