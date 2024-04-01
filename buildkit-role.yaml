@@ -9,6 +9,7 @@ rules:
       - deployments
     verbs:
       - get
+      - create
   - apiGroups:
       - ""
     resources:
