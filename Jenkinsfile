@@ -8,7 +8,7 @@ kind: Pod
 spec:
   containers:
   - name: buildkit
-    image: moby/buildkit
+    image: docker
     command:
     - sleep
     args:
