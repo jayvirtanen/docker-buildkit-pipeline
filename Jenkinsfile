@@ -30,7 +30,7 @@ spec:
     stages {
         stage('Docker Build') {
             environment{
-                $DOCKER_CONFIG = '/docker'
+                DOCKER_CONFIG = '/docker'
             }
             steps {
                 container('docker'){
