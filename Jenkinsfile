@@ -33,7 +33,7 @@ spec:
                 container('docker'){
                 withCredentials([string(credentialsId: 'registry-path', variable: 'REGISTRY')]){
                 sh '''
-                cp /dockercreds/config.json /root/.docker/config.json
+                cp /dockercreds/config.json ~/.docker/config.json
                 docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
                 docker buildx build --platform linux/arm64,linux/amd64 --push --progress plain -t ${REGISTRY}/buildkit-test:latest .
                 '''
