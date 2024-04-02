@@ -35,7 +35,6 @@ spec:
             steps {
                 container('docker'){
                 sh '''
-                printenv
                 mkdir /docker
                 cp /dockercreds/config.json /docker/config.json
                 docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
