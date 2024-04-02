@@ -11,7 +11,19 @@ spec:
     command:
     - sleep
     args:
-    - infinity  
+    - infinity
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /root/.docker
+  volumes:
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: docker-credentials
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
 '''
         }
     }
@@ -20,11 +32,8 @@ spec:
             steps {
                 container('docker'){
                 sh '''
-                cd ~
-                pwd
                 docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
-                docker buildx build --progress plain -t local-test:1 .
-                docker buildx ls
+                docker buildx build --push --progress plain -t janivirtanen/buildkit-test:latest .
                 '''
                 }
             }
