@@ -29,15 +29,11 @@ spec:
     }
     stages {
         stage('Docker Build') {
-            environment{
-                DOCKER_CONFIG = '/docker'
-            }
             steps {
                 container('docker'){
                 withCredentials([string(credentialsId: 'registry-path', variable: 'REGISTRY')]){
                 sh '''
-                mkdir /docker
-                cp /dockercreds/config.json /docker/config.json
+                cp /dockercreds/config.json /root/.docker/config.json
                 docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
                 docker buildx build --platform linux/arm64,linux/amd64 --push --progress plain -t ${REGISTRY}/buildkit-test:latest .
                 '''
