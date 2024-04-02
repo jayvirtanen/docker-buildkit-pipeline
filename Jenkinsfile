@@ -29,11 +29,12 @@ spec:
     }
     stages {
         stage('Docker Build') {
+            environment{
+                $DOCKER_CONFIG = '/docker'
+            }
             steps {
                 container('docker'){
                 sh '''
-                export $DOCKER_CONFIG=/docker
-                echo $DOCKER_CONFIG
                 docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
                 docker buildx build --push --progress plain -t janivirtanen/buildkit-test:latest .
                 '''
